@@ -5,10 +5,12 @@
 	<title>Title</title>
 	<style>
 		:root {
-			--bg-color: ##1C1E21;
-			--card-bg: #303235;
-			--border: #3f4144;
-			--text-color: #303235;
+			--bg-color: #1C1E21;
+			--card-bg: #1d1f22;
+			--chip-bg: #1d2023;
+			--border: #202326;
+			--text-primary: #f1f5f9;
+			--text-secondary: #94a3b8;
 
 			/* Brand Colors */
 			--brand-color: #007f80;
@@ -24,20 +26,90 @@
 			--brand-100: #00b2b3;
 		}
 
+		body {
+            margin: 0;
+            padding: 0;
+        }
+
 		.main-container {
 			background: var(--bg-color);
 			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding-top: 80px;
 		}
 
+		.floating-nav {
+            position: fixed;
+            top: 3%;
+            left: 8%;
+            right: 8%;
+            width: 80%;
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 10px 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .nav-image {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+
+        .nav-name {
+            margin-left: 10px;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
 		.card {
-			border: 1px solid #ccc;
-			padding: 15px;
-			margin: 10px 0;
-			border-radius: 5px;
+		    min-height: 200px;
+			border: 1px solid var(--border);
+			padding: 10px 15px;
+			border-radius: 25px;
+			background: var(--card-bg);
+            color: var(--text-primary);
+            width:75%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
 		}
+
+        .card h2 {
+            color: var(--text-primary);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
 	</style>
 </head>
 <body>
-	<div class="main-container"></div>
+    <div class="floating-nav">
+        <img src="./Images/NavHeadShot128.png" alt="Profile" class="nav-image">
+        <span class="nav-name">Mr. Sid</span>
+    </div>
+	<div class="main-container">
+        <div class="card">
+            <h2>Welcome to my portfolio page.</h2>
+            <p>This is still under construction, please check back often for updates.</p>
+        </div>
+    </div>
 </body>
 </html>
