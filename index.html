@@ -1,143 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Mr. Sid's Portfolio</title>
-	<style>
-		:root {
-			--bg-color: #1C1E21;
-			--card-bg: #1e2024;
-			--chip-bg: #1f2225;
-			--border: #232629;
-			--text-primary: #f1f5f9;
-			--text-secondary: #94a3b8;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>Mr. Sid's Portfolio</title>
+  <style>
+    :root {
+      --bg-color: #1c1e21;
+      --card-bg: #292e38; /* Opaque fallback when backdrop blur is unavailable. */
+      --chip-bg: #252a33;
+      --border: rgba(126, 169, 255, 0.24);
+      --text-primary: #f1f5f9;
+      --text-secondary: #b0bed1;
+      --brand-color: #5485e5;
+      --brand-mid: #5e94ff;
+      --brand-light: #7ea9ff;
+      --brand-rgb: 84, 133, 229;
+      /* Experiment: lower glass alpha for more transparency. */
+      --glass-alpha: 0.45;
+      --glass-blur: 18px;
+      --glow-alpha: 0.14;
+    }
 
-			/* Brand Colors */
-			--brand-color: #007f80;
-			--brand-10: #cce5e6;
-			--brand-20: #99cccc;
-			--brand-30: #66b2b3;
-			--brand-40: #339999;
-			--brand-50: #007f80;
-			--brand-60: #00898a;
-			--brand-70: #009394;
-			--brand-80: #009d9f;
-			--brand-90: #00a8a9;
-			--brand-100: #00b2b3;
-		}
+    *, *::before, *::after { box-sizing: border-box; }
+    html { background: var(--bg-color); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      color: var(--text-primary);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      /* A glass surface needs something behind it to reveal. */
+      background:
+        radial-gradient(ellipse at 25% 35%, rgba(var(--brand-rgb), 0.17), transparent 48%),
+        radial-gradient(ellipse at 80% 65%, rgba(94, 148, 255, 0.08), transparent 45%),
+        var(--bg-color);
+    }
 
-		html, body {
-			margin: 0;
-			padding: 0;
-			width: 100%;
-			background: var(--bg-color);
-		}
+    .floating-nav {
+      /* In-flow header prevents overlap when text grows or wraps. */
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 5% 0;
+      padding: 10px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+    }
+    .nav-avatar {
+      position: relative;
+      display: grid;
+      place-items: center;
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      border-radius: 50%;
+      background: rgba(var(--brand-rgb), 0.2);
+      color: var(--brand-light);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .nav-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .nav-name { font-size: 1.2rem; font-weight: 700; }
+    .main-container {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: clamp(32px, 7vw, 80px) 5%;
+    }
+    .card {
+      width: min(100%, 960px);
+      min-height: 240px;
+      padding: clamp(24px, 5vw, 56px);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      /* Commas separate layers; only the final layer gets a semicolon. */
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 4px 8px rgba(0, 0, 0, 0.18),
+        0 20px 48px rgba(0, 0, 0, 0.30),
+        0 0 40px rgba(var(--brand-rgb), var(--glow-alpha));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+    .card h1 { font-size: clamp(1.6rem, 1.1rem + 2vw, 2.4rem); line-height: 1.2; margin: 0 0 16px; }
+    .card p { color: var(--text-secondary); font-size: 1.1rem; max-width: 52ch; margin: 0; }
 
-	 	footer {
-			background: var(--border);
-		  	color: var(--text-primary);
-			text-align: center;
-			padding: 5px 30px;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			gap: 30px;
-		}
-
-		footer a {
-			color: var(--text-primary);
-			text-decoration: none;
-		}
-
-		footer a:hover {
-			color: var(--brand-color);
-			text-decoration: underline;
-		}
-
-		.main-container {
-			background: var(--bg-color);
-			min-height: 100vh;
-			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			padding-top: 80px;
-		}
-
-		.floating-nav {
-			position: fixed;
-			top: 3%;
-			left: 5%;
-			right: 5%;
-			display: flex;
-			align-items: center;
-			background: var(--card-bg);
-			border: 2px outset var(--border);
-			border-radius: 50px;
-			padding: 10px 20px;
-			box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-			backdrop-filter: blur(10px);
-			z-index: 1000;
-		}
-
-		.nav-image {
-			border-radius: 50%;
-			width: 40px;
-			height: 40px;
-			object-fit: cover;
-		}
-
-		.nav-name {
-			margin-left: 10px;
-			color: var(--text-primary);
-			font-size: 1.2rem;
-			font-weight: bold;
-		}
-
-		.card {
-			min-height: 200px;
-			border: 1px solid var(--border);
-			padding: 10px 15px;
-			border-radius: 25px;
-			background: var(--card-bg);
-			color: var(--text-primary);
-			width:75%;
-			box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			text-align: center;
-		}
-
-		.card h2 {
-			color: var(--text-primary);
-			font-size: 2rem;
-			margin-bottom: 10px;
-		}
-
-		.card p {
-			color: var(--text-secondary);
-			font-size: 1.1rem;
-			line-height: 1.5;
-		}
-	</style>
+    @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .card, .floating-nav {
+        background: rgba(38, 43, 53, var(--glass-alpha));
+        -webkit-backdrop-filter: blur(var(--glass-blur));
+        backdrop-filter: blur(var(--glass-blur));
+      }
+    }
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px 24px;
+      padding: 16px 5%;
+      border-top: 1px solid var(--border);
+      background: rgba(28, 30, 33, 0.7);
+      color: var(--text-secondary);
+    }
+    footer p { margin: 0; }
+    footer a { color: var(--brand-light); text-underline-offset: 4px; overflow-wrap: anywhere; }
+    footer a:hover { color: var(--text-primary); }
+    a:focus-visible { outline: 2px solid var(--brand-light); outline-offset: 5px; border-radius: 2px; }
+    @media (max-width: 480px) {
+      .floating-nav { margin-top: 16px; padding-inline: 14px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
 </head>
 <body>
-<div class="floating-nav">
-	<img src="./Images/NavHeadShot128.png" alt="Profile" class="nav-image">
-	<span class="nav-name">Mr. Sid</span>
-</div>
-<div class="main-container">
-	<div class="card">
-		<h2>Welcome to my portfolio page.</h2>
-		<p>This is still under construction, please check back often for updates.</p>
-	</div>
-</div>
+  <header class="floating-nav">
+    <span class="nav-avatar" aria-hidden="true">
+      MS
+      <!-- Keep the existing Images folder beside this file. Initials show if the photo is missing. -->
+      <img src="./Images/NavHeadShot128.png" alt="" class="nav-image" onerror="this.remove()">
+    </span>
+    <span class="nav-name">Mr. Sid</span>
+  </header>
+  <main class="main-container">
+    <section class="card" aria-labelledby="welcome">
+      <h1 id="welcome">Welcome to my portfolio page.</h1>
+      <p>This is still under construction, please check back often for updates.</p>
+    </section>
+  </main>
+  <footer>
+    <p>©2025 - Mr. Sid</p>
+    <p><a href="mailto:mrsid@mrsid.dev">contact@mrsid.dev</a></p>
+  </footer>
 </body>
-<footer>
-	<p>©2025 - Mr. Sid</p>
-	<p><a href="mailto:contact@mrsid.dev">contact@mrsid.dev</a></p>
-</footer>
 </html>
